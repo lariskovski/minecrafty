@@ -9,6 +9,7 @@ stone_texture = load_texture('assets/stone_block.png')
 brick_texture = load_texture('assets/brick_block.png')
 dirt_texture = load_texture('assets/dirt_block.png')
 sky_texture = load_texture('assets/skybox.png')
+punch_sound = Audio('assets/punch_sound',loop = False, autoplay = False)
 
 textures = [grass_texture, stone_texture, brick_texture, dirt_texture]
 
@@ -42,11 +43,13 @@ class Voxel(Button):
 
             if key == 'left mouse down':
                 try:
+                    punch_sound.play()
                     voxel = Voxel(position = self.position + mouse.normal, texture = textures[block_pick-1])
                 except IndexError:
                     pass
 
             if key == 'right mouse down':
+                punch_sound.play()
                 destroy(self)
 
 class Sky(Entity):
