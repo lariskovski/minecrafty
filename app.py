@@ -15,14 +15,6 @@ textures = [grass_texture, stone_texture, brick_texture, dirt_texture]
 
 block_pick = 1
 
-# This is called at every frame
-def update():
-    global block_pick
-    if held_keys['1']: block_pick = 1
-    if held_keys['2']: block_pick = 2
-    if held_keys['3']: block_pick = 3
-    if held_keys['4']: block_pick = 4
-
 
 class Voxel(Button):
 
@@ -52,6 +44,7 @@ class Voxel(Button):
                 punch_sound.play()
                 destroy(self)
 
+
 class Sky(Entity):
     def __init__(self):
         super().__init__(
@@ -62,7 +55,9 @@ class Sky(Entity):
             double_sided = True
         )
 
-floor_block_size = 20
+
+# Generate floor
+floor_block_size = 5
 # Forward and backwards
 for z in range(floor_block_size):
     # Left and right
@@ -72,6 +67,26 @@ for z in range(floor_block_size):
 
 player = FirstPersonController()
 sky = Sky()
+
+z_min_edge = 0
+z_max_edge = floor_block_size - 1
+
+# This is called at every frame
+def update():
+    global block_pick
+    if held_keys['1']: block_pick = 1
+    if held_keys['2']: block_pick = 2
+    if held_keys['3']: block_pick = 3
+    if held_keys['4']: block_pick = 4
+
+    # Add infinite border to side
+    global z_min_edge, z_max_edge, floor_block_size
+    print(player.position.x, player.position.z)
+    if int(player.position.z) == z_min_edge:
+        for x in range(0, floor_block_size):
+            volex = Voxel(position = (x, 0, z_min_edge - 1))
+        z_min_edge-=1
+        z_max_edge-=1
 
 if __name__ == "__main__":
     app.run()
