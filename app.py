@@ -8,6 +8,7 @@ grass_texture = load_texture('assets/grass_block.png')
 stone_texture = load_texture('assets/stone_block.png')
 brick_texture = load_texture('assets/brick_block.png')
 dirt_texture = load_texture('assets/dirt_block.png')
+sky_texture = load_texture('assets/skybox.png')
 
 textures = [grass_texture, stone_texture, brick_texture, dirt_texture]
 
@@ -48,6 +49,15 @@ class Voxel(Button):
             if key == 'right mouse down':
                 destroy(self)
 
+class Sky(Entity):
+    def __init__(self):
+        super().__init__(
+            parent = scene,
+            model = 'sphere',
+            texture = sky_texture,
+            scale = 150,
+            double_sided = True
+        )
 
 floor_block_size = 20
 # Forward and backwards
@@ -58,6 +68,7 @@ for z in range(floor_block_size):
 
 
 player = FirstPersonController()
+sky = Sky()
 
 if __name__ == "__main__":
     app.run()
