@@ -16,16 +16,27 @@ class Voxel(Button):
             color = color.white,
             highlight_color = color.lime
         )
+    
+    def input(self,key):
+        if self.hovered:
+            if key == 'left mouse down':
+                voxel = Voxel(position = self.position + mouse.normal)
+            
+            if key == 'right mouse down':
+                destroy(self)
 
 
+app = Ursina()
+
+
+floor_block_size = 20
 # Forward and backwards
-for z in range(8):
+for z in range(floor_block_size):
     # Left and right
-    for x in range(8):
-        volex = Voxel(position = (z, 0, x))
+    for x in range(floor_block_size):
+        volex = Voxel(position = (x, 0, z))
 
 
-if __name__ == '__main__':
-    app = Ursina()
-    player = FirstPersonController()
-    app.run()
+player = FirstPersonController()
+
+app.run()
